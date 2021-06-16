@@ -1,0 +1,10 @@
+{
+    "user": {   
+        "username":"22021206" , 
+        "schedule": {
+            "hour": "10",
+            "minute": "30"
+        },
+        "delay": true
+    }
+}
