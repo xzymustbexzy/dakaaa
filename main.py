@@ -6,7 +6,7 @@ import datetime
 from daka import do_daka
 
 
-def daka(username, password, delay):
+def daka(username, password):
     do_daka(username, password)
 
 
@@ -40,7 +40,7 @@ def main():
     
     print('⏰ 已启动定时程序，每天 %02d:%02d 为 %s 打卡' %(int(user["schedule"]["hour"]), int(user["schedule"]["minute"]),user["username"]))
     block_schedule(daka, 
-                   args=[user["username"], password, user["delay"]],
+                   args=[user["username"], password],
                    hour=user["schedule"]["hour"], minute=user["schedule"]["minute"])
     
     
