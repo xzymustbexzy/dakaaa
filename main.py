@@ -1,13 +1,38 @@
+from lib2to3.pytree import Base
 import os
 import json
 import time
 import datetime
 
+import requests
+
 from daka import do_daka
 
 
+def send_message(msg):
+    if not os.path.exists('./config.json'):
+        return 
+    configs = json.loads(open('./config.json', 'r').read())
+    url = configs['message']['webhook']
+    data = {
+        'msg_type': 'text',
+        'content': {
+            'text': msg
+        }
+    }
+    r = requests.post(url, json=data)
+    assert r.code == 200
+
+
 def daka(username, password):
-    do_daka(username, password)
+    try:
+        do_daka(username, password)
+    except BaseException as e:
+        print(e)
+        now = datetime.now()
+        dt_string = now.strftime("%d-%m-%Y %H:%M:%S")
+        send_message(f'[{dt_string}] 打卡失败，请检查\n错误内容: {e}')
+
 
 
 def block_schedule(func, args, hour, minute):

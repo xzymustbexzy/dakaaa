@@ -18,20 +18,14 @@ url = 'https://healthreport.zju.edu.cn/ncov/wap/default/index'
 
 
 question_choice = {
-    'sfyxjzxgym': '是 Yes', # 是否意向接种？
-    'sfbyjzrq': '否', # 是否是不宜接种人群?
-    'jzxgymqk': '已接种第一针', # 当前接种情况
-    'sffrqjwdg': '否 No', # 今日是否因发热请假未到岗（教职工）或未返校（学生）？
-    'sfqtyyqjwdg': '否 No', # 今日是否因发热外的其他原因请假未到岗（教职工）或未返校（学生）？
-    'tw': '否 No', # 今日是否有发热症状（高于37.2 ℃）？
-    'sfyqjzgc': '否 No', # 今日是否被当地管理部门要求在集中隔离点医学观察？
-    'sfcyglq': '否 No', # 进入是否居家隔离观察
-    'sfcxzysx': '否 No', # 是否有任何与疫情相关的，值得注意的情况？
-    'sfsqhzjkk': '是 Yes', # 是否已经申领校区所在地健康码？
+    'sfzx': '是 Yes', # 今日是否在校
+    'campus': '玉泉校区 Yuquan ', # 所在校区
+    'internship': '否 No', # 今日是否进行实习或实践
+
     'sqhzjkkys': '绿码 Green code', # 今日申领校区所在地健康码的颜色？
-    'sfzx': '是 Yes', # 今日是否在校？
-    'sfzgn': '境内 in Chinese Mainland', # 所在地点
-    'sfymqjczrj': '否 No', # 本人家庭成员(包括其他密切接触人员)是否有近14日入境或近14日拟入境的情况？
+    'tw': '否 No', # 今日是否有发热症状（高于37.2 ℃）？
+    'sfcxzysx': '否 No', # 今日是否有涉及涉疫情的管控措施
+    'sfjcbh': '否 No', # 是否有与新冠疫情确诊人员或密接人员有接触的情况? 
 }
 
 
@@ -70,12 +64,13 @@ def fill_form():
         div = driver.find_element_by_name(div_name)
         btn = div.find_element_by_xpath(f"./div/div/span[text()='{choice}']")
         btn.click()
-        time.sleep(0.2)
+        time.sleep(1)
     place_span = driver.find_element_by_name('area')
     place_span.click()
     time.sleep(1)
     agree_div = driver.find_element_by_name('sfqrxxss')
     agree_div.click()
+
 
 def do_daka(username, password, delay=False):
     if delay:
