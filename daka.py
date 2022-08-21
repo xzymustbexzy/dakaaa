@@ -80,9 +80,9 @@ def fill_form():
     # agree_div.click()
 
 
-def do_daka(username, password, delay=False):
-    if delay:
-        time_delay = random.randint(1, 1000)
+def do_daka(username, password, delay=0):
+    if delay > 0:
+        time_delay = random.randint(1, delay)
         print(f'请等待{time_delay} s')
         time.sleep(time_delay)
         

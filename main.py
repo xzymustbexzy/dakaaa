@@ -3,6 +3,7 @@ import os
 import json
 import time
 import datetime
+import random
 
 import requests
 
@@ -10,10 +11,10 @@ from daka import do_daka
 
 
 def send_message(msg):
-    if not os.path.exists('./config.json'):
-        return 
-    configs = json.loads(open('./config.json', 'r').read())
-    url = configs['message']['webhook']
+    config = json.loads(open('./config.json', 'r').read())
+    if 'message' not in config:
+        return
+    url = config['message']['webhook']
     data = {
         'msg_type': 'text',
         'content': {
@@ -35,7 +36,8 @@ def daka(username, password):
 
 
 
-def block_schedule(func, args, hour, minute):
+def block_schedule(func, args, hour, minute, random_delay_minute):
+    delay_seconds = random_delay_minute * 60
     now = datetime.datetime.now()
     dt = datetime.datetime(now.year, now.month, now.day, int(hour), int(minute))
     next_time = int(dt.timestamp())
@@ -47,7 +49,7 @@ def block_schedule(func, args, hour, minute):
     while True:
         print(f'下一次定时启动时间: {dt}')
         time.sleep(next_time - now)
-        func(*args)
+        func(*args, delay=delay_seconds)
         dt += datetime.timedelta(days=1)
         next_time = int(dt.timestamp())
         now = int(time.time())
@@ -56,18 +58,24 @@ def block_schedule(func, args, hour, minute):
 def main():
     
     if os.path.exists('./config.json'):
-        configs = json.loads(open('./config.json', 'r').read())
-        user = configs["user"]
+        config = json.loads(open('./config.json', 'r').read())
     else:
         print('Error: 请提供config.json文件')
+    assert 'username' in config, '请在config.json文件中配置用户名'
+    assert 'schedule' in config, '请在config.json文件中配置打卡时间'
         
     password = input('请输入密码:')
     
     print('⏰ 已启动定时程序，每天 %02d:%02d 为 %s 打卡' %(int(user["schedule"]["hour"]), int(user["schedule"]["minute"]),user["username"]))
-    block_schedule(daka, 
-                   args=[user["username"], password],
-                   hour=user["schedule"]["hour"], minute=user["schedule"]["minute"])
     
+    random_delay_minute = 0
+    if 'random_delay_minute' in config['schedule']:
+        random_delay_minute = config['schedule']['random_delay_minute']
+    block_schedule(daka, 
+                   args=[config['username'], password],
+                   hour=config['schedule']['hour'], minute=config['schedule']['minute'],
+                   random_delay_minute=random_delay_minute)
+
     
 if __name__ == "__main__":
     main()
