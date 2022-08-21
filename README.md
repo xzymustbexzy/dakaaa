@@ -18,21 +18,22 @@ pip install selenium
 #### 修改config.json配置文件
 配置文件例如：
 ```
-{
-    "user": {   
-        "username":"22021206" , 
-        "schedule": {
-            "hour": "10",
-            "minute": "30"
-        }
-    }
+{ 
+    "username":"22021206" , 
+    "schedule": {
+        "hour": 10,
+        "minute": 30,
+        "random_delay_minute": 30
+    },
     "message": {
         "webhook": "https://open.feishu.cn/open-apis/bot/v2/hook/01d1f823-166d-4c73-a634-ecef69f0cd75"
     }
 }
+
 ```
 `username`:填写你的学号  
 `schedule`:填写每天打卡的定时时间  
+`random_delay_minute`:可选项，可以随机等待一段时间后打卡，以防止每天在同一时刻打卡，增强真实性  
 `message`:可选项，打卡失败后的消息通知，具体配置可参考 [飞书自定义消息机器人](https://open.feishu.cn/document/ukTMukTMukTM/ucTM5YjL3ETO24yNxkjN)
 
 ### 启动程序

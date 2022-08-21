@@ -66,7 +66,7 @@ def main():
         
     password = input('请输入密码:')
     
-    print('⏰ 已启动定时程序，每天 %02d:%02d 为 %s 打卡' %(int(user["schedule"]["hour"]), int(user["schedule"]["minute"]),user["username"]))
+    print('⏰ 已启动定时程序，每天 %02d:%02d 为 %s 打卡' %(int(config['schedule']['hour']), int(config['schedule']['minute']), config["username"]))
     
     random_delay_minute = 0
     if 'random_delay_minute' in config['schedule']:
