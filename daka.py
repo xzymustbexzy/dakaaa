@@ -8,7 +8,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 
 chrome_options = Options()
-# chrome_options.add_argument('--headless')
+chrome_options.add_argument('--headless')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
 
@@ -75,7 +75,6 @@ def fill_form():
     place_span = driver.find_element('name', 'area')
     place_span.click()
     time.sleep(1)
-    print('准备提交...')
     # agree_div = driver.find_element('name', 'sfqrxxss')
     # agree_div.click()
 

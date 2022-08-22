@@ -25,9 +25,9 @@ def send_message(msg):
     assert r.code == 200
 
 
-def daka(username, password):
+def daka(username, password, delay):
     try:
-        do_daka(username, password)
+        do_daka(username, password, delay)
     except BaseException as e:
         print(e)
         now = datetime.now()
